@@ -46,11 +46,13 @@ void draw()
 
 void initVideoRecording()
 {
+  if (!RECORD_VIDEO) {
+    return;
+  }
+
   videoExport = new VideoExport(this);
   videoExport.setFrameRate(FPS);
-  if (RECORD_VIDEO) {
-    videoExport.startMovie();
-  }
+  videoExport.startMovie();
 }
 
 void handleVideoRecording()
@@ -66,19 +68,23 @@ void handleVideoRecording()
 
 void exitWhenFrameCountReached()
 {
-  if (frameCount > endFrame) {
-    videoExport.endMovie();
-    exit();
+  if (frameCount < endFrame) {
+    return;
   }
+
+  videoExport.endMovie();
+  exit();
 }
 
 void printVideoProgress()
 {
   int done = (int)((frameCount / endFrame) * 100.0);
-  if (done > progress) {
-    progress = done;
-    println(progress + "%");
+  if (done <= progress) {
+    return;
   }
+
+  progress = done;
+  println(progress + "%");
 }
 
 void resetCell(int x, int y)
