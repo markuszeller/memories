@@ -98,7 +98,7 @@ void resetCell(int x, int y)
 
 void increaseNeighbourBrightness(int x, int y, int level)
 {
-  if(level > MAX_RECURSION_LEVEL) {
+  if (level > MAX_RECURSION_LEVEL) {
     return;
   }
   
